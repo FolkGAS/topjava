@@ -14,5 +14,7 @@ public interface MealService {
 
     Meal get(int id, int userId) throws NotFoundException;
 
+    List<MealWithExceed> getFiltered(int userId, String sDateFrom, String sDateTo, String sTimeFrom, String sTimeTo);
+
     List<MealWithExceed> getAll(int userId);
 }
