@@ -29,13 +29,15 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         MealsUtil.MEALS.stream()
                 .limit(24)
                 .forEach(meal -> {
-            meal.setUserId(AuthorizedUser.getId()); save(meal);
-        });
+                    meal.setUserId(AuthorizedUser.getId());
+                    save(meal);
+                });
         MealsUtil.MEALS.stream()
                 .skip(24)
                 .limit(24)
                 .forEach(meal -> {
-                    meal.setUserId(AuthorizedUser.getId() + 1); save(meal);
+                    meal.setUserId(AuthorizedUser.getId() + 1);
+                    save(meal);
                 });
     }
 
@@ -49,21 +51,18 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public void delete(int id, int userId) {
-        if (repository.get(id).getUserId() == userId) {
-            repository.remove(id);
-        }
+    public void delete(int id) {
+        repository.remove(id);
     }
 
     @Override
-    public Meal get(int id, int userId) {
-        Meal meal = repository.get(id);
-        return meal == null ? null : meal.getUserId() != userId ? null : meal;
+    public Meal get(int id) {
+        return repository.get(id);
     }
 
     @Override
     public List<Meal> getFilteredByDate(int userId, LocalDate dateFrom, LocalDate dateTo) {
-        if (dateFrom == null && dateTo == null){
+        if (dateFrom == null && dateTo == null) {
             return getAll(userId);
         }
         return repository.values().stream()
@@ -74,10 +73,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return repository.values().stream()
-                .filter(meal -> meal.getUserId() == userId)
-                .sorted(Comparator.comparing(Meal::getDateTime).reversed())
-                .collect(Collectors.toList());
+        return getFilteredByDate(userId, LocalDate.MIN, LocalDate.MAX);
     }
 }
 

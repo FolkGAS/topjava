@@ -9,9 +9,9 @@ public interface MealRepository {
 
     Meal save(Meal meal);
 
-    void delete(int id, int userId);
+    void delete(int id);
 
-    Meal get(int id, int userId);
+    Meal get(int id);
 
     List<Meal> getFilteredByDate(int userId, LocalDate dateFrom, LocalDate dateTo);
 

@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -45,6 +46,8 @@ public class MealRestController {
                 description, Integer.valueOf(calories));
         if (meal.getUserId() == null) {
             meal.setUserId(AuthorizedUser.getId());
+        } else if (meal.getUserId() != AuthorizedUser.getId()){
+            throw new NotFoundException("ID " + id + "for user " + AuthorizedUser.getId() + "not found");
         }
 
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
@@ -53,12 +56,21 @@ public class MealRestController {
 
     public void delete(HttpServletRequest request) {
         int id = getId(request);
+        Meal meal = service.get(id, AuthorizedUser.getId());
+        if (meal.getUserId() != AuthorizedUser.getId()){
+            throw new NotFoundException("ID " + id + "for user " + AuthorizedUser.getId() + "not found");
+        }
         LOG.info("Delete {}", id);
         service.delete(id, AuthorizedUser.getId());
     }
 
     public Meal get(HttpServletRequest request) {
-        return service.get(getId(request), AuthorizedUser.getId());
+        int id = getId(request);
+        Meal meal = service.get(id, AuthorizedUser.getId());
+        if (meal.getUserId() != AuthorizedUser.getId()){
+            throw new NotFoundException("ID " + id + "for user " + AuthorizedUser.getId() + "not found");
+        }
+        return meal;
     }
 
     public List<MealWithExceed> getFiltered(HttpServletRequest request) {

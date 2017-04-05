@@ -30,13 +30,13 @@ public class MealServiceImpl implements MealService {
         if (get(id, userId) == null) {
             throw new NotFoundException("Not authorized user meal. ID: " + id + ", UserID: " + userId);
         } else {
-            repository.delete(id, userId);
+            repository.delete(id);
         }
     }
 
     @Override
     public Meal get(int id, int userId) throws NotFoundException {
-        Meal meal = repository.get(id, userId);
+        Meal meal = repository.get(id);
         if (meal == null){
             throw new NotFoundException("Not authorized user meal. ID: " + id + ", UserID: " + userId);
         } else {
