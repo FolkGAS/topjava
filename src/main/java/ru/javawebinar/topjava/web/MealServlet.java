@@ -44,8 +44,13 @@ public class MealServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action == null) {
+            String userAgent = request.getHeader("User-Agent");
+            String dateTime = request.getParameter("dateTime") + ":00";
+            if (userAgent != null && !userAgent.toLowerCase().contains("chrome")) {
+                dateTime = dateTime.replace(' ', 'T');
+            }
             final Meal meal = new Meal(
-                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    LocalDateTime.parse(dateTime),
                     request.getParameter("description"),
                     Integer.valueOf(request.getParameter("calories")));
 
