@@ -72,7 +72,8 @@ public class MealServiceTest {
 
     @Test(expected = NotFoundException.class)
     public void testUpdateNotFound() throws Exception {
-        service.update(MEAL1, ADMIN_ID);
+        Meal updated = getUpdated();
+        service.update(updated, ADMIN_ID);
     }
 
     @Test
