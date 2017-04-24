@@ -9,11 +9,15 @@ public class Profiles {
             POSTGRES_DB = "postgres",
             HSQL_DB = "hsqldb";
 
-    public static final String ACTIVE_DB = POSTGRES_DB;
+//    public static final String ACTIVE_DB = POSTGRES_DB;
+    public static final String ACTIVE_DB = HSQL_DB;
 
     public static final String
             JDBC = "jdbc",
-            JPA = "jpa";
+            JPA = "jpa",
+            DATA_JPA = "datajpa";
 
-    public static final String REPOSITORY_IMPLEMENTATION = JPA;
+//    public static final String REPOSITORY_IMPLEMENTATION = JDBC;
+//    public static final String REPOSITORY_IMPLEMENTATION = JPA;
+    public static final String REPOSITORY_IMPLEMENTATION = DATA_JPA;
 }
