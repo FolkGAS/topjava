@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(SpringRunner.class)
 //@Sql(scripts = "classpath:db/initDB_hsql.sql", config = @SqlConfig(encoding = "UTF-8"))
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles({Profiles.ACTIVE_DB, Profiles.REPOSITORY_IMPLEMENTATION})
+@ActiveProfiles(Profiles.ACTIVE_DB)
 public abstract class AbstractServiceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
@@ -58,6 +58,7 @@ public abstract class AbstractServiceTest {
                 "\n---------------------------------\n" +
                 results +
                 "---------------------------------\n");
+        results.delete(0, results.length());
     }
 
 }
