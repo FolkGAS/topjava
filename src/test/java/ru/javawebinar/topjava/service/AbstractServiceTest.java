@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringRunner.class)
+//@Sql(scripts = "classpath:db/initDB_hsql.sql", config = @SqlConfig(encoding = "UTF-8"))
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles({Profiles.ACTIVE_DB, Profiles.REPOSITORY_IMPLEMENTATION})
 public abstract class AbstractServiceTest {

@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
+
+    @Transactional
+    @Modifying
     @Override
     Meal save(Meal meal);
 
@@ -25,4 +28,6 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     List<Meal> findByUserIdOrderByDateTimeDesc(int userId);
 
     List<Meal> findByUserIdAndDateTimeBetweenOrderByDateTimeDesc(int userId, LocalDateTime startDate, LocalDateTime endDate);
+
+    Meal findMealById(int id);
 }
